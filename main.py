@@ -1,19 +1,23 @@
 import tkinter as tk
 from tkinter import *
-import random, csv
+import random, csv, pandas
 
 # ----------------------- Constants ----------------------------
+try:
+    data = pandas.read_csv("data/words_to_learn.csv").values.tolist()
+except FileNotFoundError:
+    data = pandas.read_csv("data/German-words.csv").values.tolist()
+    
 current_word = None
 # ----------------------- Functions ----------------------------
 
 def pick_word():
     global current_word
-    with open("data/german-words.csv") as data_file:
-        data = list(csv.reader(data_file))
-        current_word = random.choice(list(data))
+    current_word = random.choice(data)
 
 def right_answer():
-    # Move the list this word is in from data to words learned
+    data.remove(current_word)
+    pandas.DataFrame(data).to_csv("data/words_to_learn.csv", index=False)
     show_front_card()
 
 def show_front_card():
