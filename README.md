@@ -1,20 +1,20 @@
-# Mathematics Flashcard Project
-A Python-based project designed to help students master mathematical concepts through active recall.
+# German Words Flashcard Project
+A Python-based project designed to help students learn the 1000 most frequently used German words through active recall.
 
 ## 🚀 Overview
-This project was born out of my background in mathematics education. I wanted to create a structured way for learners to engage with complex formulas and logic. 
+This project began as an assignment for a Python course. The original version was based on learning French, but I adapted the code to focus on German because I am currently learning the language myself. By refactoring the project this way, I was able to combine two of my current learning goals into one technical exercise.
 
 ## 🛠 Tech Stack & Skills
-- **Language:** Python
-- **Tools:** GitHub for version control.
-- **Key Concepts:** Logic structuring, user input handling, and data organization.
+* **Language:** Python
+* **Tools:** GitHub for version control.
+* **Key Concepts:** Dictionary & list manipulation, control flow, and input validation.
 
 ## 📈 Learning Objectives
 Through this project, I practiced:
-- Implementing clean, readable code.
-- Using Git for regular commits and project management.
-- Breaking down an educational need into a functional technical tool.
+* Implementing clean, readable code.
+* Using Git for regular commits and project management.
+* Breaking down an educational need into a functional technical tool.
 
 ## 🔜 Future Improvements
-- Adding a GUI (Graphical User Interface).
-- Integrating a SQL database to track student progress over time.
+* Adding a GUI (Graphical User Interface).
+* Integrating a SQL database to track student progress over time.
