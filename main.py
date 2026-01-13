@@ -1,10 +1,15 @@
 import tkinter as tk
 from tkinter import *
-import random, pandas
+import random, pandas, csv
 
-# ----------------------- Data ----------------------------
+# ----------------------- Functions ----------------------------
 
-# data = pandas.read_csv("data/german_words.csv")
+def pick_word():
+    with open("data/german-words.csv") as data_file:
+        data = csv.reader(data_file)
+        n = random.choice(list(data))
+        return n
+
 
 # -------------------------- UI -----------------------------
 
@@ -19,17 +24,6 @@ INCORRECT_IMG = PhotoImage(file="images/wrong.png")
 
 card_width = FRONT_CARD.width()
 card_height = FRONT_CARD.height()
-
-window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
-canvas = Canvas(
-    window, 
-    width=card_width, 
-    height=card_height, 
-    bg=BACKGROUND_COLOR, 
-    highlightthickness=0)
-canvas.grid(row=0, column=0, columnspan=2)
-
-canvas.create_image(card_width//2, card_height/2, image=FRONT_CARD)
 
 wrong_button = Button(
     window,
@@ -49,6 +43,21 @@ right_button = Button(
 )
 right_button.grid(row=1, column=1)
 
+# -------------------------- Front Card -----------------------------
+
+window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
+canvas = Canvas(
+    window, 
+    width=card_width, 
+    height=card_height, 
+    bg=BACKGROUND_COLOR, 
+    highlightthickness=0)
+canvas.grid(row=0, column=0, columnspan=2)
+
+canvas.create_image(card_width//2, card_height/2, image=FRONT_CARD)
+
+german_word = pick_word()
+
 frontCard_title = canvas.create_text(
     card_width//2, 
     card_height//3, 
@@ -58,7 +67,7 @@ frontCard_title = canvas.create_text(
 frontCard_word = canvas.create_text(
     card_width//2, 
     card_height//2, 
-    text="German Word", 
+    text=german_word[0], 
     font=("Ariel", 50, "bold")
 )
 
