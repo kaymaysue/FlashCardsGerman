@@ -2,14 +2,25 @@ import tkinter as tk
 from tkinter import *
 import random, pandas, csv
 
+current_word = None
+
 # ----------------------- Functions ----------------------------
 
 def pick_word():
+    global current_word
     with open("data/german-words.csv") as data_file:
-        data = csv.reader(data_file)
-        n = random.choice(list(data))
-        return n
+        data = list(csv.reader(data_file))
+        current_word = random.choice(list(data))
+        canvas.itemconfig(frontCard_word, text=current_word[0])
 
+def wrong_answer():
+    print("Wrong answer")
+    pick_word()
+
+def right_answer():
+    print("Right answer")
+    # Move this word from the list of words to learn to words learned
+    pick_word()
 
 # -------------------------- UI -----------------------------
 
@@ -30,7 +41,8 @@ wrong_button = Button(
     image=INCORRECT_IMG,
     highlightthickness=0,
     bg=BACKGROUND_COLOR,
-    bd=0
+    bd=0,
+    command=wrong_answer
 )
 wrong_button.grid(row=1, column=0)
 
@@ -39,7 +51,8 @@ right_button = Button(
     image=CORRECT_IMG,
     highlightthickness=0,
     bg=BACKGROUND_COLOR,
-    bd=0
+    bd=0,
+    command=right_answer
 )
 right_button.grid(row=1, column=1)
 
@@ -56,8 +69,6 @@ canvas.grid(row=0, column=0, columnspan=2)
 
 canvas.create_image(card_width//2, card_height/2, image=FRONT_CARD)
 
-german_word = pick_word()
-
 frontCard_title = canvas.create_text(
     card_width//2, 
     card_height//3, 
@@ -67,9 +78,11 @@ frontCard_title = canvas.create_text(
 frontCard_word = canvas.create_text(
     card_width//2, 
     card_height//2, 
-    text=german_word[0], 
+    text=" ", 
     font=("Ariel", 50, "bold")
 )
+
+pick_word()
 
 window.mainloop()
 
