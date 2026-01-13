@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import *
-import random, pandas, csv
+import random, csv
 
+# ----------------------- Constants ----------------------------
 current_word = None
-
 # ----------------------- Functions ----------------------------
 
 def pick_word():
@@ -11,16 +11,24 @@ def pick_word():
     with open("data/german-words.csv") as data_file:
         data = list(csv.reader(data_file))
         current_word = random.choice(list(data))
-        canvas.itemconfig(frontCard_word, text=current_word[0])
-
-def wrong_answer():
-    print("Wrong answer")
-    pick_word()
 
 def right_answer():
-    print("Right answer")
-    # Move this word from the list of words to learn to words learned
+    # Move the list this word is in from data to words learned
+    show_front_card()
+
+def show_front_card():
     pick_word()
+    canvas.itemconfig(card_image, image=FRONT_CARD)
+    canvas.itemconfig(Card_title, text="German Word", fill="black")
+    canvas.itemconfig(Card_word, text=current_word[0], fill="black")
+
+    window.after(3000, show_back_card)
+
+def show_back_card():
+    canvas.itemconfig(card_image, image=BACK_CARD)
+    canvas.itemconfig(Card_title, text="English", fill="white")
+    canvas.itemconfig(Card_word, text=current_word[1], fill="white")
+
 
 # -------------------------- UI -----------------------------
 
@@ -42,7 +50,7 @@ wrong_button = Button(
     highlightthickness=0,
     bg=BACKGROUND_COLOR,
     bd=0,
-    command=wrong_answer
+    command=show_front_card
 )
 wrong_button.grid(row=1, column=0)
 
@@ -56,7 +64,9 @@ right_button = Button(
 )
 right_button.grid(row=1, column=1)
 
-# -------------------------- Front Card -----------------------------
+# -------------------------- CARDS -----------------------------
+
+pick_word()
 
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 canvas = Canvas(
@@ -66,23 +76,22 @@ canvas = Canvas(
     bg=BACKGROUND_COLOR, 
     highlightthickness=0)
 canvas.grid(row=0, column=0, columnspan=2)
+card_image = canvas.create_image(card_width//2, card_height/2, image=FRONT_CARD)
 
-canvas.create_image(card_width//2, card_height/2, image=FRONT_CARD)
-
-frontCard_title = canvas.create_text(
+Card_title = canvas.create_text(
     card_width//2, 
     card_height//3, 
-    text="German Word", 
+    text=" ", 
     font=("Ariel", 30, "italic")
 )
-frontCard_word = canvas.create_text(
+Card_word = canvas.create_text(
     card_width//2, 
     card_height//2, 
     text=" ", 
     font=("Ariel", 50, "bold")
 )
 
-pick_word()
+show_front_card()
 
 window.mainloop()
 
